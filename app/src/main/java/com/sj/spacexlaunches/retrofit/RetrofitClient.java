@@ -1,5 +1,7 @@
 package com.sj.spacexlaunches.retrofit;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -13,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static RetrofitAPIInterface apiInterface;
-    private static final String BASE_URL = "https://randomuser.me/";
+    private static final String BASE_URL = "https://api.spacexdata.com/v3/";
 
     public static RetrofitAPIInterface getClient() {
         if (apiInterface == null) {
@@ -35,8 +37,9 @@ public class RetrofitClient {
         httpClient.writeTimeout(30, TimeUnit.SECONDS);
         httpClient.addInterceptor(logging);
         httpClient.addInterceptor(new Interceptor() {
+            @NotNull
             @Override
-            public Response intercept(Chain chain) throws IOException {
+            public Response intercept(@NotNull Chain chain) throws IOException {
                 Request request = chain.request();
                 Request.Builder builder = request.newBuilder();
 

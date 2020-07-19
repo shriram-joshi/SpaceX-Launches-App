@@ -8,11 +8,10 @@ import com.sj.spacexlaunches.repositories.LaunchRepository
 
 class LaunchViewModel: ViewModel() {
     private var launchData: MutableLiveData<ArrayList<Launch>> = MutableLiveData()
-    private lateinit var launchRepo: LaunchRepository
+//    private var launchRepo: LaunchRepository = LaunchRepository()
 
     fun init(){
-        launchRepo = LaunchRepository().instance
-        launchData = launchRepo.getLaunches()
+        launchData = LaunchRepository().getLaunches()
     }
 
     fun getLaunchData(): LiveData<ArrayList<Launch>> {

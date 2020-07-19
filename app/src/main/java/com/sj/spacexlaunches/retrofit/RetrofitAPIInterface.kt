@@ -7,7 +7,7 @@ import retrofit2.http.QueryMap
 
 interface RetrofitAPIInterface {
 
-    @GET
+    @GET("launches/")
     fun getLaunches(@QueryMap map: Map<String, Int>): Call<JSONArray>
 
 }

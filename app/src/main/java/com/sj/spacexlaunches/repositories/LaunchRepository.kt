@@ -11,21 +11,18 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.concurrent.thread
 
 class LaunchRepository {
 
-    val instance: LaunchRepository = LaunchRepository()
     private var dataSet: ArrayList<Launch> = ArrayList()
     private var apiInterface: RetrofitAPIInterface = RetrofitClient.getClient()
 
     fun getLaunches(): MutableLiveData<ArrayList<Launch>>{
-        val offset = 96
-        val limit = 10
+        val offset = 95
+        val limit = 1
 
-        val map: Map<String, Int> = HashMap()
-        map.plus(pair = Pair("offset", offset))
-        map.plus(pair = Pair("limit", limit))
-
+        val map: Map<String, Int> = mapOf("offset" to offset, "limit" to limit)
         val call: Call<JSONArray> = apiInterface.getLaunches(map)
 
         call.enqueue(object : Callback<JSONArray>{

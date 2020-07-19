@@ -32,9 +32,8 @@ class MainActivity : AppCompatActivity() {
 
         launchViewModel.getLaunchData().observe(this, androidx.lifecycle.Observer {
             launchAdapter.notifyDataSetChanged()
+            initialize()
         })
-
-        initialize()
 
         swipe_refresh.setOnRefreshListener {
             launchViewModel.init()

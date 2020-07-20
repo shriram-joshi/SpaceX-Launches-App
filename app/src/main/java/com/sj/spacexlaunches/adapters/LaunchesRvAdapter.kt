@@ -1,17 +1,22 @@
 package com.sj.spacexlaunches.adapters
 
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.sj.spacexlaunches.R
-import com.sj.spacexlaunches.model.Launch
+import com.sj.spacexlaunches.activities.LaunchInfoActivity
+import com.sj.spacexlaunches.model.launch_model.Launch
 import kotlinx.android.synthetic.main.launch_item.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class LaunchesRvAdapter(private val launchesList: ArrayList<Launch>, private val context: Context) : RecyclerView.Adapter<LaunchesRvAdapter.LaunchViewHolder>() {
 
@@ -30,12 +35,28 @@ class LaunchesRvAdapter(private val launchesList: ArrayList<Launch>, private val
     class LaunchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         fun populate(launch: Launch, context: Context){
-            itemView.mission_name_tv.text = launch.launchName
-            itemView.launch_date.text = launch.launchDate
+            itemView.mission_name.text = launch.missionName
+            itemView.launch_date.text = Date(launch.launchDateUnix*1000L).toString()
+            itemView.flight_number.text = launch.flightNumber.toString()
+            val background : Drawable = itemView.flight_number.background
+            when(launch.launchSuccess){
+                null -> background.setTint(Color.YELLOW)
+                true -> background.setTint(Color.GREEN)
+                false -> background.setTint(Color.RED)
+            }
 
-            launch.launchImage?.let {
-                val options: RequestOptions = RequestOptions().placeholder(R.drawable.loading_image).error(R.drawable.rocket_icon)
-                Glide.with(context).load(it).apply(options).into(itemView.launch_image)
+            if (launch.links.flickrImages.size != 0){
+                val options: RequestOptions = RequestOptions().placeholder(R.drawable.loading_image)
+                    .error(R.drawable.rocket_icon)
+                Glide.with(context).load(Uri.parse(launch.links.flickrImages[0])).apply(options).into(itemView.launch_image)
+            }else{
+                Glide.with(context).load(R.drawable.rocket_icon).into(itemView.launch_image)
+            }
+
+            itemView.setOnClickListener {
+                val info: Intent = Intent(context, LaunchInfoActivity::class.java)
+                info.putExtra("id", launch.flightNumber)
+                context.startActivity(info)
             }
         }
     }

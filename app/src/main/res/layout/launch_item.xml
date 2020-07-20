@@ -15,7 +15,7 @@
         android:src="@drawable/rocket_icon" />
 
     <TextView
-        android:id="@+id/mission_name_tv"
+        android:id="@+id/mission_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -29,10 +29,23 @@
         android:id="@+id/launch_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/mission_name_tv"
+        android:layout_below="@id/mission_name"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:layout_toEndOf="@id/launch_image"
         android:text="Date"
         android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/flight_number"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="00"
+        android:textColor="@android:color/black"
+        android:background="@drawable/circle"
+        android:gravity="center"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/mission_name"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"/>
 </RelativeLayout>

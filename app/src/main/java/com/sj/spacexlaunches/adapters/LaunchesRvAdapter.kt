@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.text.format.DateFormat
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +18,6 @@ import com.sj.spacexlaunches.activities.LaunchInfoActivity
 import com.sj.spacexlaunches.model.launch_model.Launch
 import kotlinx.android.synthetic.main.launch_item.view.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class LaunchesRvAdapter(private val launchesList: ArrayList<Launch>, private val context: Context) : RecyclerView.Adapter<LaunchesRvAdapter.LaunchViewHolder>() {
 
@@ -36,7 +37,16 @@ class LaunchesRvAdapter(private val launchesList: ArrayList<Launch>, private val
 
         fun populate(launch: Launch, context: Context){
             itemView.mission_name.text = launch.missionName
-            itemView.launch_date.text = Date(launch.launchDateUnix*1000L).toString()
+            if(DateUtils.isToday(Date(launch.launchDateUnix*1000L).time)) {
+                itemView.launch_date.text = "Today ${DateFormat.format(
+                    "hh:mm aa",
+                    Date(launch.launchDateUnix * 1000L).time
+                )}"
+                itemView.launch_date.setTextColor(Color.RED)
+            }else{
+                itemView.launch_date.text = Date(launch.launchDateUnix*1000L).toString()
+                itemView.launch_date.setTextColor(Color.BLACK)
+            }
             itemView.flight_number.text = launch.flightNumber.toString()
             val background : Drawable = itemView.flight_number.background
             when(launch.launchSuccess){

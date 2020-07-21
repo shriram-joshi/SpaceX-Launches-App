@@ -35,7 +35,7 @@ public class OrbitParams {
     private Object periodMin;
     @SerializedName("lifespan_years")
     @Expose
-    private Integer lifespanYears;
+    private Double lifespanYears;
     @SerializedName("epoch")
     @Expose
     private Object epoch;
@@ -124,11 +124,11 @@ public class OrbitParams {
         this.periodMin = periodMin;
     }
 
-    public Integer getLifespanYears() {
+    public Double getLifespanYears() {
         return lifespanYears;
     }
 
-    public void setLifespanYears(Integer lifespanYears) {
+    public void setLifespanYears(Double lifespanYears) {
         this.lifespanYears = lifespanYears;
     }
 

@@ -1,51 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="5dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="20dp">
 
-    <ImageView
-        android:id="@+id/launch_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentStart="true"
-        android:layout_margin="10dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/rocket_icon" />
-
-    <TextView
-        android:id="@+id/mission_name"
-        android:layout_width="fill_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@id/launch_image"
-        android:text="Mission Name"
-        android:textSize="20sp" />
+        android:background="#FBE9E7">
 
-    <TextView
-        android:id="@+id/launch_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/mission_name"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_toEndOf="@id/launch_image"
-        android:text="Date"
-        android:textSize="15sp" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/launch_image_cv"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp">
 
-    <TextView
-        android:id="@+id/flight_number"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:text="00"
-        android:textColor="@android:color/black"
-        android:background="@drawable/circle"
-        android:gravity="center"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/mission_name"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"/>
-</RelativeLayout>
+            <ImageView
+                android:id="@+id/launch_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/rocket_icon"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/mission_name"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_margin="10dp"
+            android:layout_toEndOf="@id/launch_image_cv"
+            android:text="Mission Name"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/launch_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mission_name"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/launch_image_cv"
+            android:text="Date"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/flight_number"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="00"
+            android:textColor="@android:color/black"
+            android:background="@drawable/circle"
+            android:gravity="center"
+            android:layout_alignEnd="@id/mission_name"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="10dp"/>
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

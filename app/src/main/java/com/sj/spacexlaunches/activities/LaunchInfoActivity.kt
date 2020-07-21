@@ -1,9 +1,10 @@
 package com.sj.spacexlaunches.activities
 
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -38,7 +39,10 @@ class LaunchInfoActivity : AppCompatActivity() {
                     .error(R.drawable.rocket_icon)
             Glide.with(this).load(Uri.parse(launch.links.flickrImages[0])).apply(options).into(image)
         }
-        details.text = launch.details
+        if (launch.details == null){
+            details.text = "No info available"
+        }else
+            details.text = launch.details
         name.text = launch.missionName
     }
 

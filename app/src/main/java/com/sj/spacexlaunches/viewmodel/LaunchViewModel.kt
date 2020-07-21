@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import com.sj.spacexlaunches.activities.LaunchInfoActivity
 import com.sj.spacexlaunches.activities.MainActivity
 import com.sj.spacexlaunches.model.launch_model.Launch
-import com.sj.spacexlaunches.repositories.LaunchInfoRepository
 import com.sj.spacexlaunches.repositories.LaunchRepository
 
 class LaunchViewModel: ViewModel() {
@@ -15,10 +14,12 @@ class LaunchViewModel: ViewModel() {
         MutableLiveData<ArrayList<Launch>>()
     }
 
+    val launchInfoData: MutableLiveData<Launch> by lazy {
+        MutableLiveData<Launch>()
+    }
 
-    private var launchInfoRepository: LaunchInfoRepository = LaunchInfoRepository()
-    val launchInfoData: MutableLiveData<com.sj.spacexlaunches.model.launch_model.Launch> by lazy {
-        MutableLiveData<com.sj.spacexlaunches.model.launch_model.Launch>()
+    val latestLaunch: MutableLiveData<Launch> by lazy {
+        MutableLiveData<Launch>()
     }
 
     fun initializeRvData(mainActivity: MainActivity) {
@@ -26,6 +27,10 @@ class LaunchViewModel: ViewModel() {
     }
 
     fun initializeLaunchInfo(launchInfoActivity: LaunchInfoActivity){
-        launchInfoRepository.getInfo(launchInfoActivity, this)
+        launchRepo.getLaunchInfo(launchInfoActivity, this)
+    }
+
+    fun getLatestLaunch(mainActivity: MainActivity){
+        launchRepo.getLatest(mainActivity, this)
     }
 }

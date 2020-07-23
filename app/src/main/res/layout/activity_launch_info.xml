@@ -4,76 +4,93 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".activities.LaunchInfoActivity">
+    tools:context=".view.activities.LaunchInfoActivity">
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:background="#FBE9E7"
-        app:cardCornerRadius="10dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/info_light">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#FBE9E7">
+            android:layout_margin="10dp"
+            app:cardCornerRadius="5dp"
+            app:cardBackgroundColor="@color/info_dark">
 
-            <androidx.cardview.widget.CardView
+            <ImageView
+                android:id="@+id/image"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="5dp">
+                android:layout_height="280dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/rocket_icon"
+                tools:ignore="ContentDescription" />
+        </androidx.cardview.widget.CardView>
 
-                <ImageView
-                    android:id="@+id/image"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/rocket_icon"/>
-            </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:nestedScrollingEnabled="true"
+            android:scrollbars="vertical"/>
 
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
-                android:nestedScrollingEnabled="true"
-                android:scrollbars="vertical"/>
+        <TextView
+            android:id="@+id/link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:layout_marginHorizontal="10dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:autoLink="web"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp"
+            android:background="@color/info_dark"
+            app:cardCornerRadius="5dp"
+            tools:ignore="ScrollViewSize">
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="vertical">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/details"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/info_dark"
+                    android:paddingTop="10dp"
+                    android:paddingHorizontal="10dp"
+                    android:paddingBottom="20sp"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
                     android:nestedScrollingEnabled="true"
                     android:scrollbars="vertical"
-                    android:paddingBottom="50dp"/>
+                    android:scrollbarStyle="insideOverlay"/>
             </ScrollView>
-        </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/progressbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:background="#33FFA726"
+        android:background="#B13D3A35"
         android:visibility="gone">
         <ProgressBar
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </FrameLayout>

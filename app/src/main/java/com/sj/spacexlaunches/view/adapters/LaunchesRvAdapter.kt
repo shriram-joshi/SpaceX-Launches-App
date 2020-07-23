@@ -1,4 +1,4 @@
-package com.sj.spacexlaunches.adapters
+package com.sj.spacexlaunches.view.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -14,8 +14,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.sj.spacexlaunches.R
-import com.sj.spacexlaunches.activities.LaunchInfoActivity
 import com.sj.spacexlaunches.model.launch_model.Launch
+import com.sj.spacexlaunches.view.activities.LaunchInfoActivity
+import com.sj.spacexlaunches.viewmodel.LaunchViewModel
 import kotlinx.android.synthetic.main.launch_item.view.*
 import java.util.*
 
@@ -30,7 +31,7 @@ class LaunchesRvAdapter(private val launchesList: ArrayList<Launch>, private val
     }
 
     override fun onBindViewHolder(holder: LaunchViewHolder, position: Int) {
-        holder.populate(launchesList[position], context)
+        holder.populate(launchesList[position],context)
     }
 
     class LaunchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -47,12 +48,12 @@ class LaunchesRvAdapter(private val launchesList: ArrayList<Launch>, private val
                 itemView.launch_date.text = Date(launch.launchDateUnix*1000L).toString()
                 itemView.launch_date.setTextColor(Color.BLACK)
             }
-            itemView.flight_number.text = launch.flightNumber.toString()
-            val background : Drawable = itemView.flight_number.background
+//            itemView.flight_number.text = launch.flightNumber.toString()
+            val background : Drawable = itemView.rv_bg.background
             when(launch.launchSuccess){
-                null -> background.setTint(Color.YELLOW)
-                true -> background.setTint(Color.GREEN)
-                false -> background.setTint(Color.RED)
+                null -> background.setTint(Color.parseColor("#FFCA28"))
+                true -> background.setTint(Color.parseColor("#87D543"))
+                false -> background.setTint(Color.parseColor("#ff5252"))
             }
 
             if (launch.links.flickrImages.size != 0){
@@ -64,7 +65,7 @@ class LaunchesRvAdapter(private val launchesList: ArrayList<Launch>, private val
             }
 
             itemView.setOnClickListener {
-                val info: Intent = Intent(context, LaunchInfoActivity::class.java)
+                val info = Intent(context, LaunchInfoActivity::class.java)
                 info.putExtra("id", launch.flightNumber)
                 context.startActivity(info)
             }

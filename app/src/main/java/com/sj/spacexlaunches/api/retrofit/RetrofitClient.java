@@ -1,4 +1,4 @@
-package com.sj.spacexlaunches.retrofit;
+package com.sj.spacexlaunches.api.retrofit;
 
 import org.jetbrains.annotations.NotNull;
 

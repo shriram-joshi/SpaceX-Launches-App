@@ -7,9 +7,10 @@
     app:cardCornerRadius="20dp">
 
     <RelativeLayout
+        android:id="@+id/rv_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FBE9E7">
+        android:background="#FFCA28">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/launch_image_cv"
@@ -44,14 +45,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/mission_name"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_margin="10dp"
             android:layout_toEndOf="@id/launch_image_cv"
             android:text="Date"
             android:textColor="@android:color/black"
             android:textSize="15sp" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/flight_number"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -59,10 +59,8 @@
             android:textColor="@android:color/black"
             android:background="@drawable/circle"
             android:gravity="center"
-            android:layout_alignEnd="@id/mission_name"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_margin="10dp"/>
+            android:layout_toEndOf="@id/launch_image_cv"
+            android:layout_margin="10dp"/>-->
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

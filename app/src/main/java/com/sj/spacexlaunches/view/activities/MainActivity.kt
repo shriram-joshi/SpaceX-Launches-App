@@ -1,4 +1,4 @@
-package com.sj.spacexlaunches.activities
+package com.sj.spacexlaunches.view.activities
 
 import android.os.Bundle
 import android.view.View
@@ -10,12 +10,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sj.spacexlaunches.R
-import com.sj.spacexlaunches.adapters.LaunchesRvAdapter
 import com.sj.spacexlaunches.model.launch_model.Launch
+import com.sj.spacexlaunches.view.adapters.LaunchesRvAdapter
 import com.sj.spacexlaunches.viewmodel.LaunchViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
-import java.time.Duration
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
@@ -25,23 +23,30 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     var limit: Int = 0
     var latest: Int = 0
 
-    private var duration = arrayOf("Select", "Latest", "Upcoming", "All"/*, "Previous Month", "Previous 3 Months", "Previous 6 Months", "Past Year"*/)
+    private var duration = arrayOf("Selectↆ", "Latest", "Upcoming", "All"/*, "Previous Month", "Previous 3 Months", "Previous 6 Months", "Past Year"*/)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         launchViewModel = ViewModelProvider(this).get(LaunchViewModel::class.java)
-        launchViewModel.getLatestLaunch(this)
+        launchViewModel.getLatestLaunch()
 
         launchViewModel.launchData.observe(this,
-            androidx.lifecycle.Observer<ArrayList<Launch>> {
+            androidx.lifecycle.Observer {
                 launchAdapter.notifyDataSetChanged()
                 initialize()
             })
 
-        launchViewModel.latestLaunch.observe(this, Observer<Launch> {
+        launchViewModel.latestLaunch.observe(this, Observer {
             latest = it.flightNumber
+        })
+
+        launchViewModel.isFetching.observe(this, Observer {
+            when(it){
+                true -> swipe_refresh.isRefreshing = true
+                false -> swipe_refresh.isRefreshing = false
+            }
         })
 
         val spinnerArrayAdapter: ArrayAdapter<String> = ArrayAdapter(this, R.layout.spinner_item, duration)
@@ -51,7 +56,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         option_spinner.onItemSelectedListener = this
 
         swipe_refresh.setOnRefreshListener {
-            launchViewModel.initializeRvData(this)
+            launchViewModel.initializeRvData(offset, limit)
         }
     }
 
@@ -73,19 +78,19 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             1 -> {
                 offset = latest - 4
                 limit = 5
-                if (latest == 0){ offset = 97 }
-                launchViewModel.initializeRvData(this)
+                if (latest == 0){ offset = 97 - 4; }
+                launchViewModel.initializeRvData(offset, limit)
             }
             2 -> {
                 offset = latest
                 limit = 0
                 if (latest == 0){ offset = 97 }
-                launchViewModel.initializeRvData(this)
+                launchViewModel.initializeRvData(offset, limit)
             }
             3 -> {
                 offset = 0
                 limit = 0
-                launchViewModel.initializeRvData(this)
+                launchViewModel.initializeRvData(offset, limit)
             }
         }
     }
@@ -97,12 +102,5 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             launches_rv.layoutManager = linearLayoutManager
             launches_rv.adapter = launchAdapter
         }
-    }
-
-    fun startLoading(){
-        swipe_refresh.isRefreshing = true
-    }
-    fun endLoading(){
-        swipe_refresh.isRefreshing = false
     }
 }

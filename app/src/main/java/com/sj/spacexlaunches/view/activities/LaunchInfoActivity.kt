@@ -1,4 +1,4 @@
-package com.sj.spacexlaunches.activities
+package com.sj.spacexlaunches.view.activities
 
 import android.net.Uri
 import android.os.Bundle
@@ -23,34 +23,37 @@ class LaunchInfoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_launch_info)
 
         id = intent.getIntExtra("id", 0)
+        Log.i("id", "$id")
 
-        launchViewModel.initializeLaunchInfo(this)
+        launchViewModel.initializeLaunchInfo(id - 1)
 
-        launchViewModel.launchInfoData.observe(this,
-            Observer<Launch> {
-                initialize(it)
-            })
+        launchViewModel.isFetching.observe(this, Observer {
+            when(it){
+                true -> progressbar.visibility = View.VISIBLE
+                false -> progressbar.visibility = View.GONE
+            }
+        })
+
+        launchViewModel.launchInfoData.observe(this, Observer { initialize(it) })
     }
 
-    private fun initialize(launch: Launch){
-        if (launch.links.flickrImages.size != 0) {
+    private fun initialize(launch: Launch) {
+        if (launch.links != null && launch.links.flickrImages.size != 0) {
             val options: RequestOptions =
                 RequestOptions().placeholder(R.drawable.loading_image)
                     .error(R.drawable.rocket_icon)
-            Glide.with(this).load(Uri.parse(launch.links.flickrImages[0])).apply(options).into(image)
+            Glide.with(this).load(Uri.parse(launch.links.flickrImages[0])).apply(options)
+                .into(image)
         }
-        if (launch.details == null){
+        if (launch.details == null) {
             details.text = "No info available"
-        }else
+        } else
             details.text = launch.details
         name.text = launch.missionName
-    }
-
-    fun startProgressBar(){
-        progressbar.visibility = View.VISIBLE
-    }
-
-    fun stopProgressBar(){
-        progressbar.visibility = View.GONE
+        if (launch.links != null && launch.links.videoLink != null && launch.links.videoLink.isNotEmpty() && !launch.links.videoLink.isBlank()) {
+            link.text = "Youtube: ${launch.links.videoLink}"
+        } else {
+            link.text = "No youtube link available"
+        }
     }
 }
